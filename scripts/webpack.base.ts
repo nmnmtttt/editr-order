@@ -2,6 +2,7 @@ import type webpack from 'webpack'
 import { join, resolve } from 'path'
 import { STYLE_EXTENSISONS, SCRIPT_EXTENSISONS, CWD, EXAMPLE_TEMPLATE_PATH } from './constant'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
+const CreateManifest = require('./CreateManifest')
 
 export type WebpackConfig = webpack.Configuration
 
@@ -20,6 +21,7 @@ const setPlugins = (): webpack.WebpackPluginInstance[] => {
         removeAttributeQuotes: true,
       },
     }),
+    new CreateManifest(),
   ]
 }
 
