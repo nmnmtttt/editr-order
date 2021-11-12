@@ -40,6 +40,11 @@ export const baseConfig: WebpackConfig = {
   module: {
     rules: [
       {
+        test: /\.(js|ts|jsx|tsx)$/,
+        exclude: /node_modules/,
+        use: ['babel-loader'],
+      },
+      {
         test: /\.css$/,
         sideEffects: true,
         use: ['style-loader', 'css-loader'],
