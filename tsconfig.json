@@ -1,16 +1,18 @@
 {
-    "compilerOptions": {
-        "outDir": "/",
-        "baseUrl": ".",
-        "allowJs": true,
-        "importHelpers": true,
-        "esModuleInterop": true,
-        "jsx": "react",
-        "target": "es2017",
-        "module": "commonjs",
-        "moduleResolution": "node",
-        "types": ["node","react","react-dom","chrome"]
-    },
-    "include": ["src/**/*","global.d.ts"],
-    "exclude": ["node_modules", "dist"]
+  "compilerOptions": {
+    "outDir": "/",
+    "baseUrl": ".",
+    "allowJs": true,
+    "importHelpers": true,
+    "esModuleInterop": true,
+    "jsx": "react",
+    "target": "es2017",
+    "module": "commonjs",
+    "declaration": true,
+    "declarationMap": true,
+    "moduleResolution": "node",
+    "types": ["node", "react", "react-dom", "chrome"]
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist"]
 }

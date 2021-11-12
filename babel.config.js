@@ -11,6 +11,15 @@ module.exports = (api, config) => {
       '@babel/preset-react',
       '@babel/preset-typescript',
     ],
-    plugins: [['@babel/plugin-transform-runtime', { corejs: false, helpers: true }]],
+    plugins: [
+      [
+        'import',
+        {
+          libraryName: 'antd',
+          style: 'css',
+        },
+      ],
+      ['@babel/plugin-transform-runtime', { corejs: false, helpers: true }],
+    ],
   }
 }

@@ -1,11 +1,17 @@
 {
   "manifest_version": 2,
-  "name": "RPA Editor",
-  "short_name": "RPAEditor",
-  "version": "1.0.0",
-  "description": "紫鸟RPA",
+  "name": "WEB editor ",
+  "short_name": "WEBeditor",
+  "version": "0.0.1",
+  "description": "网页编辑",
+  "icons": {
+    "16": "static/icon/logo.png",
+    "48": "static/icon/logo.png",
+    "128": "static/icon/logo.png"
+  },
   "browser_action": {
-    "default_title": "RPA Editor"
+    "default_icon": "static/icon/logo.png",
+    "default_title": "WEB editor"
   },
   "content_scripts": [
     {
