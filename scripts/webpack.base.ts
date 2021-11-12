@@ -2,7 +2,6 @@ import type webpack from 'webpack'
 import { join, resolve } from 'path'
 import { STYLE_EXTENSISONS, SCRIPT_EXTENSISONS, CWD, EXAMPLE_TEMPLATE_PATH } from './constant'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
-import { MergeManifest } from '@greatrpa/plugins/dist/manifest'
 
 export type WebpackConfig = webpack.Configuration
 
@@ -19,12 +18,6 @@ const setPlugins = (): webpack.WebpackPluginInstance[] => {
         removeComments: true,
         collapseWhitespace: true,
         removeAttributeQuotes: true,
-      },
-    }),
-    new MergeManifest({
-      copy: '../../../editor/dist',
-      merge() {
-        return true
       },
     }),
   ]
@@ -46,20 +39,6 @@ export const baseConfig: WebpackConfig = {
   },
   module: {
     rules: [
-      {
-        test: /\.(js|ts|jsx|tsx)$/,
-        exclude: /node_modules/,
-        use: [
-          'babel-loader',
-          {
-            loader: resolve(__dirname, '../node_modules/@greatrpa/plugins/dist/windowInject'),
-            options: {
-              env: 'test',
-              rule: ['app'],
-            },
-          },
-        ],
-      },
       {
         test: /\.css$/,
         sideEffects: true,
