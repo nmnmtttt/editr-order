@@ -80,13 +80,13 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
       }
     case ActionType.GET: {
       const titles = Array.from(document.querySelectorAll(ITEMQUERY.title))
-      Array.from(document.querySelectorAll(ITEMQUERY.price)).reduce(
+      const prices = Array.from(document.querySelectorAll(ITEMQUERY.price)).reduce(
         (pre, cur, index) => [...pre, { title: (titles[index] as any).innerText, value: (cur as any).innerText }],
-        [],
+        []
       )
-      Array.from(document.querySelectorAll(ITEMQUERY.img)).reduce(
-        (pre, cur, index) => [...pre, { title: (titles[index] as any).innerText, value: (cur as any).innerText }],
-        [],
+      const img = Array.from(document.querySelectorAll(ITEMQUERY.img)).reduce(
+        (pre, cur, index) => [...pre, { title: (titles[index] as any).innerText, value: (cur as any).src }],
+        []
       )
       break
     }
