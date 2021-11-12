@@ -17,6 +17,7 @@ enum EditType {
 const ITEMQUERY = {
   price: '.order-product-price span span', //商品价格query
   img: '.order-product-item-img img', // 商品图片query
+  title: '.order-product-item-detail li .order-product-item-title-wrap a',
   detialUl: '.order-product-item-detail', // 商品详情ul
   orderDetail: '.merge-order-title', //商品详情标题头
   productItem: '.order-product-item', //商品详情本体
@@ -78,8 +79,15 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
           break
       }
     case ActionType.GET: {
-
-    Array.from(  document.querySelectorAll(ITEMQUERY.PRICE)).reduce()
+      const titles = Array.from(document.querySelectorAll(ITEMQUERY.title))
+      Array.from(document.querySelectorAll(ITEMQUERY.price)).reduce(
+        (pre, cur, index) => [...pre, { title: (titles[index] as any).innerText, value: (cur as any).innerText }],
+        [],
+      )
+      Array.from(document.querySelectorAll(ITEMQUERY.img)).reduce(
+        (pre, cur, index) => [...pre, { title: (titles[index] as any).innerText, value: (cur as any).innerText }],
+        [],
+      )
       break
     }
     case ActionType.UNION: {
