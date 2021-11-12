@@ -1,9 +1,15 @@
 import type webpack from 'webpack'
-import { join, resolve } from 'path'
+import { join } from 'path'
 import { STYLE_EXTENSISONS, SCRIPT_EXTENSISONS, CWD, EXAMPLE_TEMPLATE_PATH } from './constant'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
-const CreateManifest = require('./CreateManifest')
 
+const path = require('path')
+const root = process.cwd()
+const CreateManifest = require('./CreateManifest')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const isDev = process.env.NODE_ENV === 'dev'
+
+const loader = isDev ? 'style-loader' : MiniCssExtractPlugin.loader
 export type WebpackConfig = webpack.Configuration
 
 export type Env = 'dev' | 'test' | 'pre' | 'prod'
@@ -47,9 +53,40 @@ export const baseConfig: WebpackConfig = {
         use: ['babel-loader'],
       },
       {
+        test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+              limit: 1024,
+              include: path.resolve(root, './src'),
+              name: 'images/[path][name].[ext]',
+            },
+          },
+        ],
+      },
+      {
         test: /\.css$/,
         sideEffects: true,
         use: ['style-loader', 'css-loader'],
+      },
+      {
+        test: /\.scss$/,
+        // include: dirs.src,
+        use: [
+          loader,
+          { loader: 'thread-loader' },
+          {
+            loader: 'css-loader',
+            options: {
+              importLoaders: true,
+              modules: {
+                localIdentName: '[local]__[name]-[hash:base64:4]',
+              },
+            },
+          },
+          'sass-loader',
+        ],
       },
       {
         test: /\.less$/,

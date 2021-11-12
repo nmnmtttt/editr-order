@@ -11,6 +11,12 @@ export interface Options {
   merge?: any
   jumpBackground?: any
 }
+
+declare module '*.scss' {
+  const content: { [className: string]: string }
+  export default content
+}
+
 declare class MergeManifest {
   private readonly extra
   private readonly content
