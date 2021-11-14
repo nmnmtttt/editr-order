@@ -16,3 +16,20 @@ iframe {
   height: 100%;
   overflow: auto;
 }
+.shopItem {
+  display: flex;
+  margin-bottom: 10px;
+  align-items: center;
+  justify-content: space-between;
+}
+.shopItem input {
+  width: 200px;
+  height: 30px;
+}
+.shopItem .ant-upload-picture-card-wrapper {
+  width: unset;
+}
+.shopItem .ant-upload.ant-upload-select-picture-card {
+  width: 104px;
+  height: 104px;
+}
