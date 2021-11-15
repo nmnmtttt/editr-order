@@ -1,12 +1,7 @@
 import { forMatPrice } from './../utils/priceEdit'
 import { cloneDeep } from 'lodash'
-import { chooseElemetAfterIndex } from './..//utils/arrDo'
-// content action
-enum ActionType {
-  EDIT = 'edit', //编辑单个页面元素
-  GET = 'get', //获取元素信息
-  UNION = 'union', //整合页面元素
-}
+import { chooseElemetAfterIndex } from './../utils/arrDo'
+import { ActionType } from './../actionType/PopupToConTent'
 
 enum EditType {
   PRICE = 'price',
@@ -64,7 +59,7 @@ unionProduct()
 feeDetail()
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-  switch (request.typ as ActionType) {
+  switch (request.type as ActionType) {
     case ActionType.EDIT:
       const { data } = request
       const { type, index, value } = data
@@ -84,10 +79,11 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         (pre, cur, index) => [...pre, { title: (titles[index] as any).innerText, value: (cur as any).innerText }],
         []
       )
-      const img = Array.from(document.querySelectorAll(ITEMQUERY.img)).reduce(
-        (pre, cur, index) => [...pre, { title: (titles[index] as any).innerText, value: (cur as any).src }],
+      const imgs = Array.from(document.querySelectorAll(ITEMQUERY.img)).reduce(
+        (pre, cur, index) => [...pre, { ...prices[index], src: (cur as any).getAttribute('src') }],
         []
       )
+      sendResponse({ arr: imgs })
       break
     }
     case ActionType.UNION: {
@@ -98,4 +94,5 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     default:
       break
   }
+  return true
 })
