@@ -25,6 +25,8 @@ chrome.browserAction.onClicked.addListener(function () {
       },
       (popup) => {
         windowInfo.popupId = popup.id
+
+        chrome.windows.update(windowInfo.popupId, { state: 'maximized' })
       }
     )
   })
@@ -55,6 +57,31 @@ const listener = (message: any, sender: chrome.runtime.MessageSender, sendRespon
             chrome.tabs.sendMessage(windowInfo.tabsId, {
               type: ActionType.EDIT,
               data,
+            })
+            break
+          case ActionType.SCREENHOT:
+            chrome.debugger.getTargets(function (targets) {
+              const extensionId = chrome.runtime.id
+              const filterTargets = targets.filter(
+                (target) => target.url.indexOf(extensionId) > -1 && target.type !== 'background_page'
+              )
+
+              if (filterTargets && filterTargets.length > 0) {
+                const target = filterTargets[0]
+                const debuggee = { targetId: target.id }
+
+                chrome.debugger.attach(debuggee, '1.3', () => {
+                  chrome.debugger.sendCommand(debuggee, 'Page.captureScreenshot', { format: 'png' }, (result) => {
+                    if (result) {
+                      const { data } = result as { data: string }
+                      sendResponse({ base64String: data })
+                      chrome.debugger.detach(debuggee)
+                    }
+                  })
+                })
+              } else {
+                sendResponse({ base64String: null, message: 'no_find_target' })
+              }
             })
             break
         }

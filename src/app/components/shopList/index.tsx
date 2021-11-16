@@ -12,7 +12,7 @@ const shopList: React.FC<any> = () => {
   const [shopList, setShopList] = useState([])
 
   useEffect(() => {
-    getShopList(setShopList)
+    getShopList((res) => setShopList(res.shopInfos))
   }, [])
   const changeShop = (inputEve, index) => {
     setShopList((e) => {
@@ -22,7 +22,7 @@ const shopList: React.FC<any> = () => {
     })
   }
   const uploadButton = (
-    <div>
+    <div style={{ width: '100%', height: '100%' }}>
       <PlusOutlined />
       <div style={{ marginTop: 8 }}>Upload</div>
     </div>
@@ -61,23 +61,26 @@ const shopList: React.FC<any> = () => {
       <div style={{ height: '90%', overflow: 'auto' }}>
         {shopList?.map((_, index) => (
           <div className="shopItem" key={index.toString(36)}>
+            <b style={{ marginRight: '5px' }}>{index + 1}</b>
             {_.src ? (
-              <div style={{ position: 'relative' }}>
+              <div className={'img-warp'} style={{ position: 'relative' }}>
                 <DeleteOutlined
                   onClick={() => deleteImg(index)}
                   style={{
                     position: 'absolute',
                     cursor: 'pointer',
                     zIndex: 2,
-                    left: '45%',
-                    top: '45%',
+                    left: '50%',
+                    top: '50%',
+                    transform: 'translateX(-50%) translateY(-50%)',
                     color: '#fff',
                   }}
                 />
-                <Avatar style={{ width: '104px', height: '104px' }} shape="square" size="small" src={_.src} />
+                <Avatar style={{ width: '100%', height: '100%' }} shape="square" size="small" src={_.src} />
               </div>
             ) : (
               <Upload
+                style={{ width: '100%', position: 'absolute', height: '100%' }}
                 maxCount={1}
                 name="avatar"
                 listType="picture-card"
