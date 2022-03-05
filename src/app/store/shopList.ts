@@ -1,4 +1,4 @@
-import { ActionType } from '~/actionType/PopupToConTent';
+import { ActionType } from '~/actionType/PopupToConTent'
 import { atom, useRecoilState, useSetRecoilState } from 'recoil'
 
 enum EditType {
@@ -11,18 +11,23 @@ const _shopList = atom({
   key: 'shopList',
   default: [],
 })
-
+let pageInfo
 const getShopList = async (setFn) => {
-  chrome.runtime.sendMessage({
-    type: ActionType.GET,
-    from: 'popup',
-  }, (res) => {
-    res?.arr.map(_ => {
-      _.value = Number(_.value.replace(/,/g, ''))
-      return _
-    })
-    setFn(res?.arr || [])
-  })
+  !pageInfo &&
+    chrome.runtime.sendMessage(
+      {
+        type: ActionType.GET,
+        from: 'popup',
+      },
+      (res: { shopInfos: any; feedDetails: any }) => {
+        pageInfo = res
+        res?.shopInfos.map((_) => {
+          _.value = Number(_.value.replace(/,/g, ''))
+          return _
+        })
+        setFn(res)
+      }
+    )
   return true
 }
 

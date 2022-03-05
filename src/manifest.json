@@ -15,30 +15,20 @@
   },
   "content_scripts": [
     {
-      "matches": [
-        "<all_urls>"
-      ],
-      "js": [
-        "content.js"
-      ],
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
       "run_at": "document_end"
     }
   ],
   "background": {
-    "scripts": [
-      "background.js"
-    ]
+    "scripts": ["background.js"]
   },
-  "web_accessible_resources": [
-    "inject.js",
-    "static/*",
-    "css/*",
-    "iamges/*"
-  ],
+  "web_accessible_resources": ["inject.js", "static/*", "css/*", "iamges/*"],
   "devtools_page": "static/devtool.html",
   "permissions": [
     "tabs",
     "activeTab",
+    "page",
     "background",
     "webRequest",
     "contextMenus",
@@ -50,12 +40,11 @@
     "unlimitedStorage",
     "cookies",
     "management",
+    "debugger",
     "<all_urls>"
   ],
   "externally_connectable": {
-    "ids": [
-      "*"
-    ]
+    "ids": ["*"]
   },
   "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"
 }

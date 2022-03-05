@@ -18,10 +18,11 @@ module.exports = {
     sourceType: 'module',
   },
   rules: {
+    'prefer-destructuring': ['never'],
     '@typescript-eslint/no-var-requires': 'off',
     '@typescript-eslint/no-extra-semi': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
     'no-mixed-operators': 0,
-    'common-dangle': 'off',
+    'common-dangle': ['never'],
   },
 }

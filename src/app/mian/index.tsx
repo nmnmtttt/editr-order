@@ -1,6 +1,9 @@
 import React, { useState } from 'react'
 import { Layout, Menu, Row, Col } from 'antd'
 import ShopList from '../components/shopList'
+import FeedDetailList from '../components/feedDetailList'
+import BottomDetailList from '../components/bottomDetailList'
+import HeadDetailList from '../components/headDetailList'
 import {
   MenuUnfoldOutlined,
   MenuFoldOutlined,
@@ -46,14 +49,17 @@ const main: React.FC<any> = () => {
             minHeight: 280,
           }}
         >
-          <Row style={{ width: '100%', height: '100%' }} className={'main-warp'}>
-            <Col className={'item-warp'} span={12}>
+          <HeadDetailList></HeadDetailList>
+          <Row style={{ width: '100%', height: '76%' }} className={'main-warp'}>
+            <Col className={'item-warp'} span={11}>
               <ShopList></ShopList>
             </Col>
-            <Col className={'item-warp'} span={12}>
-              col-12
+            <Col span={2} />
+            <Col className={'item-warp'} span={11}>
+              <FeedDetailList></FeedDetailList>
             </Col>
           </Row>
+          <BottomDetailList></BottomDetailList>
         </Content>
       </Layout>
     </Layout>
