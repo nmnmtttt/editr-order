@@ -14,4 +14,5 @@ export enum EditType {
   TITLE = 'title',
   BOTTOM = 'bottom',
   DELETE = 'delete',
+  NUMS = 'productNums',
 }

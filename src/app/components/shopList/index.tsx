@@ -6,14 +6,15 @@ import { EditType } from '~/actionType/PopupToConTent'
 
 const shopList: React.FC<any> = () => {
   const [shopList, setShopList] = useState([])
+  console.log(shopList)
 
   useEffect(() => {
     getShopList((res) => setShopList(res.shopInfos))
   }, [])
-  const changeShop = (inputEve, index) => {
+  const changeShop = (inputEve, index, key = 'value') => {
     setShopList((e) => {
       const arr = [...e]
-      arr[index].value = inputEve.target.value
+      arr[index][key] = inputEve.target.value
       return arr
     })
   }
@@ -96,13 +97,21 @@ const shopList: React.FC<any> = () => {
             )}
             <em style={{ width: '60%' }}>{_.title}</em>
             <Input
-              key={index.toString(36)}
               value={_.value}
               onChange={(e) => {
                 changeShop(e, index)
               }}
               onBlur={(e) => {
                 changeShopPage(index, shopList[index].value, EditType.PRICE)
+              }}
+            />
+            <Input
+              value={_.nums}
+              onChange={(e) => {
+                changeShop(e, index, 'nums')
+              }}
+              onBlur={(e) => {
+                changeShopPage(index, shopList[index].nums, EditType.NUMS)
               }}
             />
             <DeleteOutlined

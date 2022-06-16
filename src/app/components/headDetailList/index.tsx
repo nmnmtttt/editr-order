@@ -23,7 +23,7 @@ const headDetailList: React.FC<any> = () => {
       <PageHeader className="site-page-header" title="订单头" subTitle="订单头部的信息明细" />
       <Row style={{ width: '100%', alignItems: 'center' }} className={'main-warp'}>
         {titleList?.map((_, index) => (
-          <Fragment>
+          <Fragment key={index.toString(36)}>
             <Col span={2} style={{ textAlign: 'right' }}>
               {_.title + '：'}
             </Col>

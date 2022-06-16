@@ -8,6 +8,7 @@ const ITEMQUERY = {
   price: '.order-product-price span span', //商品价格query
   img: '.order-product-item-img img', // 商品图片query
   title: '.order-product-item-detail li .order-product-item-title-wrap a',
+  productNums: '.order-product-item-detail .order-product-num',
   detialUl: '.order-product-item-detail', // 商品详情ul
   orderDetail: '.merge-order-title', //商品详情标题头
   productItem: '.order-product-item', //商品详情本体
@@ -78,6 +79,9 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         case EditType.PRICE:
           document.querySelectorAll(ITEMQUERY[type])[index].innerText = forMatPrice(value)
           break
+        case EditType.NUMS:
+          document.querySelectorAll(ITEMQUERY[type])[index].innerText = value
+          break
         case EditType.FEE:
           document
             .querySelectorAll(`${FEEQUERY.side} ${FEEQUERY.feeItem}`)
@@ -107,8 +111,16 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
       }
     case ActionType.GET: {
       const titles = Array.from(document.querySelectorAll(ITEMQUERY.title))
+      const nums = Array.from(document.querySelectorAll(ITEMQUERY.productNums))
       const prices = Array.from(document.querySelectorAll(ITEMQUERY.price)).reduce(
-        (pre, cur, index) => [...pre, { title: (titles[index] as any).innerText, value: (cur as any).innerText }],
+        (pre, cur, index) => [
+          ...pre,
+          {
+            title: (titles[index] as any).innerText,
+            value: (cur as any).innerText,
+            nums: (nums[index] as any).innerText,
+          },
+        ],
         []
       )
       //商品列表
