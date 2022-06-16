@@ -96,6 +96,12 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
             if (el.children) (el.children[0] as any).innerText = value
           }
           break
+        case EditType.DELETE:
+          {
+            // 移除对应的data
+            document.querySelectorAll(ITEMQUERY.detialUl)[index].remove()
+          }
+          break
         default:
           break
       }

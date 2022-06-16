@@ -2,11 +2,7 @@ import { Input, PageHeader, Avatar, Upload } from 'antd'
 import React, { Fragment, useEffect, useState } from 'react'
 import { getShopList, changeShopPage } from '../../store/shopList'
 import { PlusOutlined, DeleteOutlined } from '@ant-design/icons'
-
-enum EditType {
-  PRICE = 'price',
-  IMG = 'img',
-}
+import { EditType } from '~/actionType/PopupToConTent'
 
 const shopList: React.FC<any> = () => {
   const [shopList, setShopList] = useState([])
@@ -36,6 +32,14 @@ const shopList: React.FC<any> = () => {
       }
     })
 
+  const deleteItem = (index) => {
+    setShopList((e) => {
+      const arr = [...e]
+      arr.splice(index, 1)
+      return arr
+    })
+    changeShopPage(index, '', EditType.DELETE)
+  }
   const deleteImg = (index) => {
     setShopList((e) => {
       const arr = [...e]
@@ -99,6 +103,14 @@ const shopList: React.FC<any> = () => {
               }}
               onBlur={(e) => {
                 changeShopPage(index, shopList[index].value, EditType.PRICE)
+              }}
+            />
+            <DeleteOutlined
+              onClick={() => deleteItem(index)}
+              style={{
+                cursor: 'pointer',
+                zIndex: 2,
+                color: '#000',
               }}
             />
           </div>

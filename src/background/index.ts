@@ -13,7 +13,6 @@ const windowInfo = {
 }
 // open popup and save window info
 chrome.browserAction.onClicked.addListener(function () {
-  chrome.tabs.create({ url: 'https://www.doorzo.net/' });
   chrome.tabs.query({ currentWindow: true, active: true }, (tabs) => {
     const tab = tabs[0]
     windowInfo.windowId = tab.windowId
